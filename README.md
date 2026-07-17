@@ -18,8 +18,20 @@ articles and generated digest reports.
 ```bash
 pip install -r requirements.txt
 python fetch_job.py    # pull the latest articles into the local DB
-python main.py          # start the dashboard at http://localhost:8010
+
+cd frontend
+npm install
+npm run build           # builds the React dashboard into frontend/dist
+
+cd ..
+python main.py           # start the dashboard at http://localhost:8010
 ```
+
+The frontend is a React + Vite + Tailwind app (`frontend/`). `main.py` serves
+its built output directly — there's no separate frontend server needed for
+normal use. For frontend development with hot reload, run `npm run dev`
+inside `frontend/` (proxies `/api` to the FastAPI backend on :8010) instead
+of `npm run build`.
 
 ## Scheduling daily fetches (Windows)
 
@@ -59,7 +71,7 @@ non-fatal and just means those articles show up on a later fetch instead.
 
 ```
 updater/
-├── main.py           # FastAPI backend
+├── main.py           # FastAPI backend (serves frontend/dist + /api/*)
 ├── config.py          # categories + RSS source list
 ├── db.py               # SQLite storage
 ├── fetcher.py          # RSS fetch/parse logic
@@ -67,6 +79,11 @@ updater/
 ├── report.py             # digest report generation
 ├── fetch_job.py            # standalone script for scheduled runs
 ├── requirements.txt
-└── static/
-    └── index.html          # dashboard UI
+└── frontend/               # React + Vite + Tailwind dashboard
+    ├── src/
+    │   ├── App.tsx             # layout + state
+    │   ├── api.ts                # typed fetch wrappers for /api/*
+    │   ├── categoryColors.ts      # fixed categorical color assignment
+    │   └── components/
+    └── dist/                    # build output (gitignored, `npm run build`)
 ```

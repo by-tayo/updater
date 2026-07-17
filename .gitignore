@@ -5,3 +5,7 @@ server.out.log
 server.err.log
 reports/*.md
 .env
+
+# frontend (React + Vite)
+frontend/node_modules/
+frontend/dist/

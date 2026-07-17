@@ -11,7 +11,7 @@ import report as report_mod
 from config import CATEGORIES
 
 BASE_DIR = Path(__file__).resolve().parent
-STATIC_DIR = BASE_DIR / "static"
+FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
 
 app = FastAPI(title="Updater - Research Digest")
 
@@ -24,7 +24,13 @@ class ReadRequest(BaseModel):
 
 @app.get("/")
 def root():
-    return FileResponse(STATIC_DIR / "index.html")
+    index = FRONTEND_DIST / "index.html"
+    if not index.is_file():
+        raise HTTPException(
+            status_code=503,
+            detail="Frontend not built. Run: cd frontend && npm install && npm run build",
+        )
+    return FileResponse(index)
 
 
 @app.get("/api/health")
@@ -98,7 +104,12 @@ def get_report(filename: str):
     return PlainTextResponse(path.read_text(encoding="utf-8"), media_type="text/markdown")
 
 
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+if FRONTEND_DIST.is_dir():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/favicon.svg")
+    def favicon():
+        return FileResponse(FRONTEND_DIST / "favicon.svg")
 
 if __name__ == "__main__":
     import uvicorn
