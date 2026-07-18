@@ -4,6 +4,18 @@ A local dashboard that aggregates RSS feeds across cybersecurity, cloud, DevSecO
 sysadmin, AI, and finance (personal + markets), and turns them into browsable
 articles and generated digest reports.
 
+<img width="3830" height="1540" alt="The Updater" src="https://github.com/user-attachments/assets/24ff4b93-5af7-412d-ae8f-4bc1dde8efda" />
+
+
+
+-----
+
+
+
+<img width="3837" height="1492" alt="Updater2" src="https://github.com/user-attachments/assets/a376f7d4-b9d8-4056-867e-d4cbcaab3577" />
+
+
+
 ## Features
 
 | Feature | Description |
