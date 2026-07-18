@@ -1,39 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  --surface-0: #0d0d0d;
-  --surface-1: #1a1a19;
-  --surface-2: #232322;
-  --border: #2c2c2a;
-  --text-primary: #ffffff;
-  --text-secondary: #c3c2b7;
-  --text-muted: #898781;
-  --accent: #3987e5;
-  --accent-ink: #ffffff;
-  --danger: #e66767;
-  --warning: #c98500;
-  --good: #0ca30c;
+  color-scheme: light;
+  --paper: #f4f1ea;
+  --paper-2: #ece5d3;
+  --ink: #1c1811;
+  --ink-secondary: #4a4335;
+  --ink-muted: #857c68;
+  --rule: #1c1811;
+  --rule-light: #cabf9f;
+  --accent: #8b1a1a;
+  --accent-ink: #f4f1ea;
+  --good: #1f5c1f;
+  --danger: #8b1a1a;
 
-  /* categorical palette (dark steps), fixed order -- see dataviz skill */
-  --cat-1: #3987e5; /* blue */
-  --cat-2: #008300; /* green */
-  --cat-3: #d55181; /* magenta */
-  --cat-4: #c98500; /* yellow */
-  --cat-5: #199e70; /* aqua */
-  --cat-6: #d95926; /* orange */
-  --cat-7: #9085e9; /* violet */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'PT Serif', Georgia, 'Times New Roman', serif;
+  --font-kicker: 'Archivo Narrow', 'Arial Narrow', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #17140e;
+    --paper-2: #211c14;
+    --ink: #ece5d3;
+    --ink-secondary: #bdb29b;
+    --ink-muted: #837a64;
+    --rule: #ece5d3;
+    --rule-light: #3a3324;
+    --accent: #d9764f;
+    --accent-ink: #17140e;
+    --good: #6fbf73;
+    --danger: #d9764f;
+  }
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  background: var(--surface-0);
-  color: var(--text-primary);
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--rule-light); }

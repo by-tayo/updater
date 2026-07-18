@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { api } from '../api';
 import type { ReportMeta } from '../types';
 
@@ -28,12 +28,12 @@ export function ReportsView({ refreshKey }: { refreshKey: number }) {
       <div className="max-w-3xl">
         <button
           onClick={() => setOpenReport(null)}
-          className="mb-3 flex items-center gap-1.5 rounded-md border border-[var(--border)] px-3 py-1.5 text-xs hover:border-[var(--accent)]"
+          className="mb-4 [font-family:var(--font-kicker)] text-[11px] font-semibold tracking-wide text-[var(--ink-secondary)] uppercase hover:text-[var(--accent)]"
         >
-          <ArrowLeft size={13} /> Back
+          &larr; Back to Archive
         </button>
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-1)] p-6 font-mono text-[12.5px] leading-7 whitespace-pre-wrap">
-          {content}
+        <div className="border border-[var(--rule-light)] bg-[var(--paper-2)] p-8">
+          <pre className="[font-family:var(--font-body)] text-[13px] leading-7 whitespace-pre-wrap text-[var(--ink)]">{content}</pre>
         </div>
       </div>
     );
@@ -41,27 +41,34 @@ export function ReportsView({ refreshKey }: { refreshKey: number }) {
 
   if (!reports.length) {
     return (
-      <div className="flex h-[60vh] flex-col items-center justify-center gap-2 text-[var(--text-muted)]">
-        <FileText size={40} className="opacity-40" />
-        <div>
-          No reports yet. Click <span className="text-[var(--text-secondary)]">Generate Report</span>.
+      <div className="flex h-[60vh] flex-col items-center justify-center gap-2 text-[var(--ink-muted)]">
+        <FileText size={36} className="opacity-40" />
+        <div className="[font-family:var(--font-body)] text-sm italic">
+          No back issues yet. Click <span className="not-italic font-semibold text-[var(--ink)]">Print Digest</span>.
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex max-w-lg flex-col gap-1.5">
-      {reports.map((r) => (
-        <div
-          key={r.name}
-          onClick={() => setOpenReport(r.name)}
-          className="flex cursor-pointer items-center justify-between rounded-md border border-[var(--border)] bg-[var(--surface-1)] px-3.5 py-2.5 text-sm hover:border-[var(--accent)]"
-        >
-          <span>{r.name}</span>
-          <span className="text-[11px] text-[var(--text-muted)]">{new Date(r.modified * 1000).toLocaleString()}</span>
-        </div>
-      ))}
+    <div>
+      <div className="mb-2 border-b-2 border-[var(--rule)] pb-1.5 [font-family:var(--font-kicker)] text-[11px] font-bold tracking-[0.2em] text-[var(--ink)] uppercase">
+        Back Issues
+      </div>
+      <div className="flex max-w-xl flex-col">
+        {reports.map((r) => (
+          <div
+            key={r.name}
+            onClick={() => setOpenReport(r.name)}
+            className="flex cursor-pointer items-baseline justify-between gap-3 border-b border-dotted border-[var(--rule-light)] py-2.5 [font-family:var(--font-body)] text-sm text-[var(--ink)] hover:text-[var(--accent)]"
+          >
+            <span>{r.name}</span>
+            <span className="shrink-0 [font-family:var(--font-kicker)] text-[10px] text-[var(--ink-muted)]">
+              {new Date(r.modified * 1000).toLocaleDateString()}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -69,7 +76,7 @@ export function ReportsView({ refreshKey }: { refreshKey: number }) {
 function Spinner() {
   return (
     <div className="flex h-[60vh] items-center justify-center">
-      <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
+      <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--rule-light)] border-t-[var(--accent)]" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Masthead } from './components/Masthead';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
 import { ArticleList } from './components/ArticleList';
@@ -85,8 +86,11 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-[var(--surface-0)] text-[var(--text-primary)]">
+    <div className="flex h-screen flex-col overflow-hidden bg-[var(--paper)] text-[var(--ink)]">
+      <Masthead />
       <Topbar
+        view={view}
+        onView={setView}
         search={search}
         onSearch={setSearch}
         onSearchSubmit={() => setSearchTerm(search)}
@@ -98,8 +102,6 @@ export default function App() {
       />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
-          view={view}
-          onView={setView}
           categories={categories}
           activeCategory={activeCategory}
           onSelectCategory={(k) => {
@@ -107,13 +109,17 @@ export default function App() {
             setView('articles');
           }}
         />
-        <main className="flex-1 overflow-y-auto px-5 py-4">
+        <main className="flex-1 overflow-y-auto px-6 py-5">
           {view === 'articles' ? (
-            <div className="flex max-w-5xl flex-col gap-4">
-              {!activeCategory && categories.length > 0 && <CategoryChart categories={categories} />}
+            <div className="flex flex-col gap-5">
+              {!activeCategory && categories.length > 0 && (
+                <div className="max-w-2xl">
+                  <CategoryChart categories={categories} />
+                </div>
+              )}
               {loadingArticles ? (
                 <div className="flex h-[40vh] items-center justify-center">
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--accent)]" />
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--rule-light)] border-t-[var(--accent)]" />
                 </div>
               ) : (
                 <ArticleList articles={articles} onMarkRead={markRead} />
@@ -124,8 +130,8 @@ export default function App() {
           )}
         </main>
       </div>
-      <footer className="border-t border-[var(--border)] bg-[var(--surface-1)] px-4 py-1.5 text-[11px] text-[var(--text-muted)]">
-        {view === 'articles' ? `${statusCount} article(s)` : ''}
+      <footer className="border-t border-[var(--rule-light)] bg-[var(--paper)] px-6 py-1.5 [font-family:var(--font-kicker)] text-[10px] text-[var(--ink-muted)] uppercase tracking-wide">
+        {view === 'articles' ? `${statusCount} ${statusCount === 1 ? 'story' : 'stories'} on file` : ''}
       </footer>
       <ToastStack toasts={toasts} />
     </div>
